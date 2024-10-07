@@ -1,12 +1,18 @@
 
-def interactive_debugging():
-    code = input("Enter the code snippet to debug: ")
-    # Simulate debugging analysis
-    if "divide by zero" in code:
-        result = "Debugging Result: Potential divide-by-zero error detected. Please handle zero division cases."
-    else:
-        result = "Debugging Result: No issues found in the code snippet."
-    print(result)
+import json
+from ..ai_utils import send_request
+
+def debug_code(code_snippet):
+    messages = [
+        {
+            "role": "user",
+            "content": f"Debug the following code and identify issues:\n{code_snippet}"
+        }
+    ]
+    response = send_request(model_key="general", messages=messages)
+    return response.get("choices", [{}])[0].get("message", {}).get("content", "")
 
 if __name__ == "__main__":
-    interactive_debugging()
+    code_snippet = "def divide_numbers(a, b):\n    return a / b"
+    result = debug_code(code_snippet)
+    print("Debugging Result:\n", result)

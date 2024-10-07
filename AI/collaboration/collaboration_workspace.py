@@ -1,12 +1,18 @@
 
-def collaboration_workspace():
-    task = input("Enter the collaboration task: ")
-    # Simulate a basic collaboration feature
-    if "merge" in task:
-        result = "Pair Programming Review Result: Conflict detected during merge. Suggested resolution: Accept both changes and refactor."
-    else:
-        result = "Pair Programming Review Result: Task completed successfully without issues."
-    print(result)
+import json
+from ..ai_utils import send_request
+
+def collaborate(pair_programming_query):
+    messages = [
+        {
+            "role": "user",
+            "content": f"Assist with the following collaboration task:\n{pair_programming_query}"
+        }
+    ]
+    response = send_request(model_key="general", messages=messages)
+    return response.get("choices", [{}])[0].get("message", {}).get("content", "")
 
 if __name__ == "__main__":
-    collaboration_workspace()
+    query = "Write a function to merge two sorted arrays."
+    result = collaborate(query)
+    print("Pair Programming Review Result:\n", result)

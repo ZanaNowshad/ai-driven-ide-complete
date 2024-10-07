@@ -1,14 +1,18 @@
 
-import sys
+import json
+from ..ai_utils import send_request
 
-def code_review():
-    code = input("Enter the code snippet for review: ")
-    # Simulate a basic code review analysis
-    if "print" in code:
-        result = "Code Review Result: Consider using a logger instead of print statements for production-level code."
-    else:
-        result = "Code Review Result: Code looks good!"
-    print(result)
+def review_code(code_snippet):
+    messages = [
+        {
+            "role": "user",
+            "content": f"Review the following code and suggest improvements:\n{code_snippet}"
+        }
+    ]
+    response = send_request(model_key="general", messages=messages)
+    return response.get("choices", [{}])[0].get("message", {}).get("content", "")
 
 if __name__ == "__main__":
-    code_review()
+    code_snippet = "def add_numbers(a, b):\n    return a + b"
+    result = review_code(code_snippet)
+    print("Code Review Result:\n", result)
