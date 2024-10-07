@@ -1,6 +1,6 @@
 
 import json
-from ..ai_utils import send_request
+from ai_utils import send_request
 
 def collaborate(pair_programming_query):
     messages = [

@@ -1,6 +1,6 @@
 
 import json
-from ..ai_utils import send_request
+from ai_utils import send_request
 
 def deploy_serverless_function(code_snippet, platform="AWS Lambda"):
     messages = [
