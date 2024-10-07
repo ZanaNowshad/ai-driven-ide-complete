@@ -1,7 +1,10 @@
 
 import requests
 import json
-from .ai_config import API_BASE, MODELS
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
+from ai_config import API_BASE, MODELS
 
 def send_request(model_key, messages, stream=False):
     model_info = MODELS.get(model_key)
